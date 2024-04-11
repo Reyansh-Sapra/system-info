@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 600px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .side-streaks {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: -1;
+        }
+
+        .side-streaks::before,
+        .side-streaks::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent);
+        }
+
+        .side-streaks::before {
+            left: 0;
+            transform: skewX(45deg);
+        }
+
+        .side-streaks::after {
+            right: 0;
+            transform: skewX(-45deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="side-streaks"></div>
+    <div class="container">
+        <h1>Device Details</h1>
+        <h2>Hardware:</h2>
+        <p>Processor: {{ processor }}</p>
+        <p>Architecture: {{ architecture }}</p>
+        <p>Machine: {{ machine }}</p>
+        <p>CPU Cores: {{ cores }}</p>
+        <p>CPU Threads: {{ threads }}</p>
+        <p>Total Memory (GB): {{ total_memory }}</p>
+        <p>Available Memory (GB): {{ available_memory }}</p>
+
+        <h2>Software:</h2>
+        <p>Python Version: {{ python_version }}</p>
+        <p>Hostname: {{ hostname }}</p>
+        <p>System: {{ system }}</p>
+        <p>Release: {{ release }}</p>
+
+        <div class="network-info">
+            <h2>Network Interfaces:</h2>
+            <ul>
+            {% for interface, addrs in network_interfaces.items() %}
+                <li>{{ interface }}:</li>
+                {% for addr in addrs %}
+                    <li>{{ addr.family.name }}: {{ addr.address }}</li>
+                {% endfor %}
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
